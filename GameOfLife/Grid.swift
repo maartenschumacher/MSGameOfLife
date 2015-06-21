@@ -42,16 +42,14 @@ class Grid: NSObject {
     
     internal func deadCells(livingCells: [GridPoint]) -> [GridPoint] {
         let withDuplicates = livingCells.flatMap({
-            getNeighbours($0)
-            }).filter({
-                !contains(livingCells, $0)
+                getNeighbours($0)
             })
         
-        return Array(Set(withDuplicates))
+        return Array(Set(withDuplicates).subtract(Set(livingCells)))
     }
     
-    internal func becomeAlive(cells: [GridPoint], livingCells: [GridPoint]) -> [GridPoint] {
-        return cells.filter({
+    internal func becomeAlive(deadCells: [GridPoint], livingCells: [GridPoint]) -> [GridPoint] {
+        return deadCells.filter({
             (cell: GridPoint) -> Bool in
             self.getLivingNeighbours(livingCells, cell: cell) == 3
         })
@@ -66,22 +64,15 @@ class Grid: NSObject {
     }
     
     internal func getLivingNeighbours(livingCells: [GridPoint], cell: GridPoint) -> Int {
-        let rowNeighbours = livingCells.filter({
+        let neighbours = livingCells.filter({
             (selectedCell: GridPoint) -> Bool in
             selectedCell.x >= (cell.x-1) && selectedCell.x <= (cell.x+1)
-        })
-        
-        var sectionNeighbours = rowNeighbours.filter({
+        }).filter({
             (selectedCell: GridPoint) -> Bool in
             selectedCell.y >= (cell.y-1) && selectedCell.y <= (cell.y+1)
         })
         
-        let selfCell = find(sectionNeighbours, cell)
-        if selfCell != nil {
-            sectionNeighbours.removeAtIndex(selfCell!)
-        }
-        
-        return sectionNeighbours.count
+        return Set(neighbours).subtract(Set([cell])).count
     }
     
     internal func getNeighbours(cell: GridPoint) -> [GridPoint] {

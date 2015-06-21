@@ -50,6 +50,7 @@ class GameOfLifeTests: XCTestCase {
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
+        // last measure: 0.172
         self.measureBlock() {
             // Put the code you want to measure the time of here.
             var index = 0
