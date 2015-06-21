@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E58FE2D1B349851000F0D84 /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E58FE2C1B349851000F0D84 /* GridViewController.swift */; };
+		2E58FE2F1B35A560000F0D84 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E58FE2E1B35A560000F0D84 /* Grid.swift */; };
+		2E58FE311B35BB92000F0D84 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E58FE301B35BB92000F0D84 /* MainViewController.swift */; };
+		2E58FE351B36AD75000F0D84 /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E58FE341B36AD75000F0D84 /* PlayButton.swift */; };
+		2E58FE361B36DA3E000F0D84 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E58FE2E1B35A560000F0D84 /* Grid.swift */; };
+		2E58FE371B36DAB8000F0D84 /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E58FE2C1B349851000F0D84 /* GridViewController.swift */; };
 		2E74627E1B3494ED00B5B91F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E74627D1B3494ED00B5B91F /* AppDelegate.swift */; };
-		2E7462801B3494ED00B5B91F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E74627F1B3494ED00B5B91F /* ViewController.swift */; };
 		2E7462831B3494ED00B5B91F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E7462811B3494ED00B5B91F /* Main.storyboard */; };
 		2E7462851B3494ED00B5B91F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E7462841B3494ED00B5B91F /* Images.xcassets */; };
 		2E7462881B3494ED00B5B91F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E7462861B3494ED00B5B91F /* LaunchScreen.xib */; };
@@ -26,10 +31,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E58FE2C1B349851000F0D84 /* GridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridViewController.swift; sourceTree = "<group>"; };
+		2E58FE2E1B35A560000F0D84 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		2E58FE301B35BB92000F0D84 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		2E58FE341B36AD75000F0D84 /* PlayButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
 		2E7462781B3494ED00B5B91F /* GameOfLife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameOfLife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E74627C1B3494ED00B5B91F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E74627D1B3494ED00B5B91F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		2E74627F1B3494ED00B5B91F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2E7462821B3494ED00B5B91F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2E7462841B3494ED00B5B91F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2E7462871B3494ED00B5B91F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -78,7 +86,10 @@
 			isa = PBXGroup;
 			children = (
 				2E74627D1B3494ED00B5B91F /* AppDelegate.swift */,
-				2E74627F1B3494ED00B5B91F /* ViewController.swift */,
+				2E58FE301B35BB92000F0D84 /* MainViewController.swift */,
+				2E58FE341B36AD75000F0D84 /* PlayButton.swift */,
+				2E58FE2C1B349851000F0D84 /* GridViewController.swift */,
+				2E58FE2E1B35A560000F0D84 /* Grid.swift */,
 				2E7462811B3494ED00B5B91F /* Main.storyboard */,
 				2E7462841B3494ED00B5B91F /* Images.xcassets */,
 				2E7462861B3494ED00B5B91F /* LaunchScreen.xib */,
@@ -212,8 +223,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E7462801B3494ED00B5B91F /* ViewController.swift in Sources */,
+				2E58FE2D1B349851000F0D84 /* GridViewController.swift in Sources */,
+				2E58FE351B36AD75000F0D84 /* PlayButton.swift in Sources */,
 				2E74627E1B3494ED00B5B91F /* AppDelegate.swift in Sources */,
+				2E58FE2F1B35A560000F0D84 /* Grid.swift in Sources */,
+				2E58FE311B35BB92000F0D84 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +236,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E7462941B3494ED00B5B91F /* GameOfLifeTests.swift in Sources */,
+				2E58FE361B36DA3E000F0D84 /* Grid.swift in Sources */,
+				2E58FE371B36DAB8000F0D84 /* GridViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +427,7 @@
 				2E7462991B3494ED00B5B91F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2E74629A1B3494ED00B5B91F /* Build configuration list for PBXNativeTarget "GameOfLifeTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +436,7 @@
 				2E74629C1B3494ED00B5B91F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

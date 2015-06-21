@@ -1,25 +1,126 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bHR-52-cG4">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Main View Controller-->
+        <scene sceneID="wus-mR-O36">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bHR-52-cG4" customClass="MainViewController" customModule="GameOfLife" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="SbI-A4-7MH"/>
+                        <viewControllerLayoutGuide type="bottom" id="iei-rG-Dva"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="aTw-ig-wBd">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NvS-3j-pFe">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="600" id="H1O-aR-YfO"/>
+                                    <constraint firstAttribute="width" constant="600" id="bec-ov-zlZ"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="797-oZ-kt7" kind="embed" identifier="showGridSegue" id="XRt-oE-8Ew"/>
+                                </connections>
+                            </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fOF-sd-nVw" customClass="PlayButton" customModule="GameOfLife" customModuleProvider="target">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="play">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="playButtonTapped:" destination="bHR-52-cG4" eventType="touchUpInside" id="1gu-6N-bhq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YhN-n0-Uh4">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="clear">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clear:" destination="bHR-52-cG4" eventType="touchUpInside" id="3vM-15-t9E"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="NvS-3j-pFe" firstAttribute="top" secondItem="fOF-sd-nVw" secondAttribute="bottom" constant="8" id="Q4M-9l-pDv"/>
+                            <constraint firstAttribute="centerX" secondItem="NvS-3j-pFe" secondAttribute="centerX" id="blY-au-BFh"/>
+                            <constraint firstAttribute="centerY" secondItem="NvS-3j-pFe" secondAttribute="centerY" id="cKk-aV-SIw"/>
+                            <constraint firstAttribute="centerX" secondItem="fOF-sd-nVw" secondAttribute="centerX" id="mRf-IN-ada"/>
+                            <constraint firstItem="YhN-n0-Uh4" firstAttribute="top" secondItem="fOF-sd-nVw" secondAttribute="top" id="rdx-h5-NwX"/>
+                            <constraint firstItem="YhN-n0-Uh4" firstAttribute="leading" secondItem="NvS-3j-pFe" secondAttribute="leading" id="wdc-aa-2nC"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="fOF-sd-nVw"/>
+                                <exclude reference="YhN-n0-Uh4"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="rdx-h5-NwX"/>
+                                <exclude reference="wdc-aa-2nC"/>
+                                <exclude reference="Q4M-9l-pDv"/>
+                                <exclude reference="mRf-IN-ada"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=regular">
+                            <mask key="subviews">
+                                <include reference="fOF-sd-nVw"/>
+                                <include reference="YhN-n0-Uh4"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="rdx-h5-NwX"/>
+                                <include reference="wdc-aa-2nC"/>
+                                <include reference="Q4M-9l-pDv"/>
+                                <include reference="mRf-IN-ada"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="playButtonInstance" destination="fOF-sd-nVw" id="PIH-yS-K5l"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GzZ-kG-2HI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-311" y="502"/>
+        </scene>
+        <!--Grid View Controller-->
+        <scene sceneID="eZV-iK-SGl">
+            <objects>
+                <collectionViewController id="797-oZ-kt7" customClass="GridViewController" customModule="GameOfLife" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="RpD-bq-fla">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="yaG-3g-si5">
+                            <size key="itemSize" width="20" height="20"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LifeCell" id="7NK-HC-rYO">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <size key="customSize" width="50" height="50"/>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="797-oZ-kt7" id="8c5-5f-lSM"/>
+                            <outlet property="delegate" destination="797-oZ-kt7" id="1tT-en-6if"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MBI-xG-8An" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="379" y="500"/>
         </scene>
     </scenes>
 </document>
