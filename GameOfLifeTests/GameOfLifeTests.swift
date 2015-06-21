@@ -25,6 +25,14 @@ class GameOfLifeTests: XCTestCase {
         GridPoint(x: 5, y: 7)
     ]
     
+    let chaosGrid = [
+        GridPoint(x: 15, y: 15),
+        GridPoint(x: 16, y: 15),
+        GridPoint(x: 15, y: 16),
+        GridPoint(x: 14, y: 16),
+        GridPoint(x: 15, y: 17)
+    ]
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -44,6 +52,12 @@ class GameOfLifeTests: XCTestCase {
         // This is an example of a performance test case.
         self.measureBlock() {
             // Put the code you want to measure the time of here.
+            var index = 0
+            var grid = self.chaosGrid
+            while index < 30 {
+                grid = self.gridInstance.nextGrid(grid)
+                index++
+            }
         }
     }
     
