@@ -16,22 +16,6 @@ struct GridSize {
     let height: Int
 }
 
-//implement equatable for GridPoint
-func ==(lhs: GridPoint, rhs: GridPoint) -> Bool {
-    return lhs.hashValue == rhs.hashValue
-}
-
-struct GridPoint: Hashable {
-    let x: Int
-    let y: Int
-    
-    var hashValue: Int {
-        get {
-            return "\(self.x),\(self.y)".hashValue
-        }
-    }
-}
-
 class GridViewController: UICollectionViewController {
     let gridSize = GridSize(width: 30, height: 30)
 
