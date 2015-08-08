@@ -33,4 +33,13 @@ class GridPointTests: XCTestCase {
             XCTAssert(test, "ouch")
         }
     }
+    
+    func testBinarySearch() {
+        let singleTree = single(5);
+        XCTAssert(setContains(5, singleTree), "fail")
+        
+        let moreTree = setInsert(6, singleTree)
+        XCTAssert(setContains(6, moreTree), "fail")
+        XCTAssertFalse(setContains(7, moreTree), "fail")
+    }
 }
