@@ -21,36 +21,72 @@ enum Tree<T> {
     case Node(Box<Tree<T>>, Box<T>, Box<Tree<T>>)
 }
 
+func emptyTree<T>() -> Tree<T> {
+    return Tree.Leaf
+}
+
 func single<T>(value: T) -> Tree<T> {
     return Tree.Node(Box(Tree.Leaf), Box(value), Box(Tree.Leaf))
 }
 
-func setContains<T: Comparable>(x: T, tree: Tree<T>) -> Bool {
+func treeContains<T: Comparable>(x: T, tree: Tree<T>) -> Bool {
     switch tree {
     case Tree.Leaf:
         return false
     case let Tree.Node(_, y, _) where x == y.unbox:
         return true
     case let Tree.Node(left, y, _) where x < y.unbox:
-        return setContains(x, left.unbox)
+        return treeContains(x, left.unbox)
     case let Tree.Node(_, y, right) where x > y.unbox:
-        return setContains(x, right.unbox)
+        return treeContains(x, right.unbox)
     default:
         fatalError("Impossible")
     }
 }
 
-func setInsert<T: Comparable>(x: T, tree: Tree<T>) -> Tree<T> {
+func treeInsert<T: Comparable>(x: T, tree: Tree<T>) -> Tree<T> {
     switch tree {
     case Tree.Leaf:
         return single(x)
     case let Tree.Node(_, y, _) where x == y.unbox:
         return tree
     case let Tree.Node(left, y, right) where x < y.unbox:
-        return Tree.Node(Box(setInsert(x, left.unbox)), y, right)
+        return Tree.Node(Box(treeInsert(x, left.unbox)), y, right)
     case let Tree.Node(left, y, right) where x > y.unbox:
-        return Tree.Node(left, y, Box(setInsert(x, right.unbox)))
+        return Tree.Node(left, y, Box(treeInsert(x, right.unbox)))
     default:
         fatalError("Impossible")
     }
 }
+
+func treeFromArray<T: Comparable>(array: [T]) -> Tree<T> {
+    if array.isEmpty {
+        return emptyTree()
+    } else {
+        return treeInsert(array.last!, treeFromArray(functionalRemoveLast(array)))
+    }
+}
+
+
+func functionalRemoveLast<T>(array: [T]) -> [T] {
+    var newArray = array
+    newArray.removeLast()
+    return newArray
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

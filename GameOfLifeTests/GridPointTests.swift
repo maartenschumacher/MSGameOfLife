@@ -15,6 +15,8 @@ class GridPointTests: XCTestCase {
     let slightlyBigger = GridPoint(x: 3, y: 4)
     let same = GridPoint(x: 3, y: 4)
     let big = GridPoint(x: 9, y: 1)
+    
+    let failMessage = "fail"
 
     func testComparison() {
         let shouldBeTrue = [
@@ -34,12 +36,16 @@ class GridPointTests: XCTestCase {
         }
     }
     
-    func testBinarySearch() {
+    func testTree() {
         let singleTree = single(5);
-        XCTAssert(setContains(5, singleTree), "fail")
+        XCTAssert(treeContains(5, singleTree), failMessage)
         
-        let moreTree = setInsert(6, singleTree)
-        XCTAssert(setContains(6, moreTree), "fail")
-        XCTAssertFalse(setContains(7, moreTree), "fail")
+        let moreTree = treeInsert(6, singleTree)
+        XCTAssert(treeContains(6, moreTree), failMessage)
+        XCTAssertFalse(treeContains(7, moreTree), failMessage)
+        
+        let arrayTree = treeFromArray([1,2,3])
+        XCTAssert(treeContains(3, arrayTree), failMessage)
+        XCTAssertFalse(treeContains(4, arrayTree), failMessage)
     }
 }
