@@ -8,6 +8,9 @@
 
 import Foundation
 
+/* Taken from "Functional Programming in Swift",
+    (Chris Eidhof, Florian Kugler, Wouter Swierstra) */
+
 class Box<T> {
     let unbox: T
     init(_ value: T) { self.unbox = value }
@@ -18,20 +21,36 @@ enum Tree<T> {
     case Node(Box<Tree<T>>, Box<T>, Box<Tree<T>>)
 }
 
-let leaf: Tree<Int> = Tree.Leaf
-
-let five: Tree<Int> = Tree.Node(Box(leaf), Box(5), Box(leaf))
-
-
 func single<T>(value: T) -> Tree<T> {
     return Tree.Node(Box(Tree.Leaf), Box(value), Box(Tree.Leaf))
 }
 
-func count<T>(tree: Tree<T>) -> Int {
+func setContains<T: Comparable>(x: T, tree: Tree<T>) -> Bool {
     switch tree {
-    case let Tree.Leaf:
-        return 0
-    case let Tree.Node(left, x, right):
-        return count(left.unbox) + 1 + count(right.unbox)
+    case Tree.Leaf:
+        return false
+    case let Tree.Node(_, y, _) where x == y.unbox:
+        return true
+    case let Tree.Node(left, y, _) where x < y.unbox:
+        return setContains(x, left.unbox)
+    case let Tree.Node(_, y, right) where x > y.unbox:
+        return setContains(x, right.unbox)
+    default:
+        fatalError("Impossible")
+    }
+}
+
+func setInsert<T: Comparable>(x: T, tree: Tree<T>) -> Tree<T> {
+    switch tree {
+    case Tree.Leaf:
+        return single(x)
+    case let Tree.Node(_, y, _) where x == y.unbox:
+        return tree
+    case let Tree.Node(left, y, right) where x < y.unbox:
+        return Tree.Node(Box(setInsert(x, left.unbox)), y, right)
+    case let Tree.Node(left, y, right) where x > y.unbox:
+        return Tree.Node(left, y, Box(setInsert(x, right.unbox)))
+    default:
+        fatalError("Impossible")
     }
 }
