@@ -38,14 +38,14 @@ class GridPointTests: XCTestCase {
     
     func testTree() {
         let singleTree = single(5);
-        XCTAssert(treeContains(5, singleTree), failMessage)
+        XCTAssert(treeContains(singleTree)(5), failMessage)
         
-        let moreTree = treeInsert(6, singleTree)
-        XCTAssert(treeContains(6, moreTree), failMessage)
-        XCTAssertFalse(treeContains(7, moreTree), failMessage)
+        let moreTree = treeInsert(singleTree)(6)
+        XCTAssert(treeContains(moreTree)(6), failMessage)
+        XCTAssertFalse(treeContains(moreTree)(7), failMessage)
         
         let arrayTree = treeFromArray([1,2,3])
-        XCTAssert(treeContains(3, arrayTree), failMessage)
-        XCTAssertFalse(treeContains(4, arrayTree), failMessage)
+        XCTAssert(treeContains(arrayTree)(3), failMessage)
+        XCTAssertFalse(treeContains(arrayTree)(4), failMessage)
     }
 }

@@ -67,13 +67,10 @@ class GridViewController: UICollectionViewController {
 
     func nextStep() {
         let selectedCells = self.collectionView?.indexPathsForSelectedItems() as! [NSIndexPath]
-        let oldGrid = selectedCells.map(indexPathToGridPoint)
+        let oldGrid = treeFromArray(selectedCells.map(indexPathToGridPoint))
         
-        let grid = Grid(gridSize: self.gridSize)
-        let newGrid = grid.nextGrid(oldGrid)
-        
-        let died = Array(Set(oldGrid).subtract(Set(newGrid))).map(gridPointToIndexPath)
-        let born = Array(Set(newGrid).subtract(Set(oldGrid))).map(gridPointToIndexPath)
+        let died = treeElements(treeSubtractWithArray(stayLiving(oldGrid), from: oldGrid)).map(gridPointToIndexPath)
+        let born = becomeAlive(deadCells(oldGrid), oldGrid).map(gridPointToIndexPath)
         
         for indexPath in born {
             self.collectionView?.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: nil)
