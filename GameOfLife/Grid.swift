@@ -15,15 +15,15 @@ class Grid: NSObject {
         self.gridSize = gridSize
     }
     
-    func nextGrid(livingCells: [GridPoint]) -> [GridPoint] {
+    func nextGrid(livingCells: Tree<GridPoint>) -> [GridPoint] {
         return filterForSize(makeNextGrid(livingCells))
     }
     
     // MARK: - Private
     
-    internal func makeNextGrid(livingCells: [GridPoint]) -> [GridPoint] {
+    internal func makeNextGrid(livingCells: Tree<GridPoint>) -> [GridPoint] {
         let survivingCells = stayLiving(livingCells)
-        let bornCells = becomeAlive(deadCells(livingCells), livingCells: livingCells)
+        let bornCells = becomeAlive(deadCells(livingCells), livingCells)
         
         let survivorSet = Set(survivingCells)
         let bornSet = Set(bornCells)
@@ -39,53 +39,64 @@ class Grid: NSObject {
         
         return Array(Set(cells).subtract(Set(outOfBounds)))
     }
-    
-    internal func deadCells(livingCells: [GridPoint]) -> [GridPoint] {
-        let withDuplicates = livingCells.flatMap({
-                getNeighbours($0)
-            })
-        
-        return Array(Set(withDuplicates).subtract(Set(livingCells)))
-    }
-    
-    internal func becomeAlive(deadCells: [GridPoint], livingCells: [GridPoint]) -> [GridPoint] {
-        return deadCells.filter({
-            (cell: GridPoint) -> Bool in
-            self.getLivingNeighbours(livingCells, cell: cell) == 3
-        })
-    }
-    
-    internal func stayLiving(livingCells: [GridPoint]) -> [GridPoint] {
-        return livingCells.filter({
-            (cell: GridPoint) -> Bool in
-            let livingNeighbours = self.getLivingNeighbours(livingCells, cell: cell)
-            return livingNeighbours == 2 || livingNeighbours == 3
-        })
-    }
-    
-    internal func getLivingNeighbours(livingCells: [GridPoint], cell: GridPoint) -> Int {
-        let neighbours = livingCells.filter({
-            (selectedCell: GridPoint) -> Bool in
-            selectedCell.x >= (cell.x-1) && selectedCell.x <= (cell.x+1)
-        }).filter({
-            (selectedCell: GridPoint) -> Bool in
-            selectedCell.y >= (cell.y-1) && selectedCell.y <= (cell.y+1)
-        })
-        
-        return Set(neighbours).subtract(Set([cell])).count
-    }
-    
-    internal func getNeighbours(cell: GridPoint) -> [GridPoint] {
-        return [
-            GridPoint(x: cell.x - 1, y: cell.y - 1),
-            GridPoint(x: cell.x, y: cell.y - 1),
-            GridPoint(x: cell.x + 1, y: cell.y - 1),
-            GridPoint(x: cell.x - 1, y: cell.y),
-            GridPoint(x: cell.x + 1, y: cell.y),
-            GridPoint(x: cell.x - 1, y: cell.y + 1),
-            GridPoint(x: cell.x, y: cell.y + 1),
-            GridPoint(x: cell.x + 1, y: cell.y + 1)
-        ]
-    }
-
 }
+
+func filterForBounds(cells: [GridPoint], bounds: GridSize) -> [GridPoint] {
+    return cells.filter { gridPoint in
+        return gridPoint.x <= bounds.width && gridPoint.y <= bounds.height
+    }
+}
+
+func deadCells(livingCells: Tree<GridPoint>) -> Tree<GridPoint> {
+    let cellsArray: [[GridPoint]] = treeMap(livingCells)(getNeighbours)
+    let neighboursTree = reduce(cellsArray, emptyTree()) { tree, cells in
+        return reduce(cells, tree) { tree, cell in
+            return treeInsert(tree)(cell)
+        }
+    }
+    
+    return treeSubtract(livingCells, from: neighboursTree)
+}
+
+func becomeAlive(deadCells: Tree<GridPoint>, livingCells: Tree<GridPoint>) -> [GridPoint] {
+    return treeFilter(judgeNeighbours(livingCells, rule: becomeAliveRule), deadCells)
+}
+
+func stayLiving(livingCells: Tree<GridPoint>) -> [GridPoint] {
+    return treeFilter(judgeNeighbours(livingCells, rule: stayLivingRule), livingCells)
+}
+
+func judgeNeighbours(livingCells: Tree<GridPoint>, rule f: (Int -> Bool))(cell: GridPoint) -> Bool {
+    let neighbourTree = treeFromArray(getNeighbours(cell))
+    return f(treeIntersect(livingCells, neighbourTree).count)
+}
+
+func getNeighbours(cell: GridPoint) -> [GridPoint] {
+    return [
+        GridPoint(x: cell.x - 1, y: cell.y - 1),
+        GridPoint(x: cell.x, y: cell.y - 1),
+        GridPoint(x: cell.x + 1, y: cell.y - 1),
+        GridPoint(x: cell.x - 1, y: cell.y),
+        GridPoint(x: cell.x + 1, y: cell.y),
+        GridPoint(x: cell.x - 1, y: cell.y + 1),
+        GridPoint(x: cell.x, y: cell.y + 1),
+        GridPoint(x: cell.x + 1, y: cell.y + 1)
+    ]
+}
+
+func stayLivingRule(x: Int) -> Bool {
+    return x == 2 || x == 3
+}
+
+func becomeAliveRule(x: Int) -> Bool {
+    return x == 3
+}
+
+
+
+
+
+
+
+
+

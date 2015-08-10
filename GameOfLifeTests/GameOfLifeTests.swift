@@ -10,8 +10,6 @@ import UIKit
 import XCTest
 
 class GameOfLifeTests: XCTestCase {
-    let gridInstance = Grid(gridSize: GridSize(width: 30, height: 30))
-    
     let blockGrid = [
         GridPoint(x:5, y:5),
         GridPoint(x:6, y:5),
@@ -48,64 +46,71 @@ class GameOfLifeTests: XCTestCase {
         XCTAssert(true, "Pass")
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        // last measure: 0.172
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
-            var index = 0
-            var grid = self.chaosGrid
-            while index < 30 {
-                grid = self.gridInstance.nextGrid(grid)
-                index++
-            }
-        }
-    }
+//    func testPerformanceExample() {
+//        // This is an example of a performance test case.
+//        // last measure: 0.172
+//        self.measureBlock() {
+//            // Put the code you want to measure the time of here.
+//            var index = 0
+//            var grid = self.chaosGrid
+//            while index < 30 {
+//                grid = self.gridInstance.nextGrid(grid)
+//                index++
+//            }
+//        }
+//    }
     
     func testStayLivingWithBlock() {
-        let survivors = gridInstance.stayLiving(blockGrid)
+        let survivors = stayLiving(treeFromArray(blockGrid))
         
         XCTAssertEqual(blockGrid.count, survivors.count, "Fail")
     }
     
     func testGetLivingNeighboursWithBlock() {
-        let deadCell = gridInstance.getLivingNeighbours(blockGrid, cell: GridPoint(x: 4, y: 5))
-        let liveCell = gridInstance.getLivingNeighbours(blockGrid, cell: GridPoint(x: 5, y: 5))
+        let neighbourTree = treeFromArray(getNeighbours(GridPoint(x: 4, y: 5)))
+        let deadCell = treeIntersect(treeFromArray(blockGrid), neighbourTree).count
+        
+        let otherNeighbourTree = treeFromArray(getNeighbours(GridPoint(x: 5, y: 5)))
+        let liveCell = treeIntersect(treeFromArray(blockGrid), otherNeighbourTree).count
         
         XCTAssert(deadCell == 2, "Fail")
         XCTAssert(liveCell == 3, "Fail")
     }
     
     func testBecomeAliveWithBlock() {
-        let bornCells = gridInstance.becomeAlive(gridInstance.deadCells(blockGrid), livingCells: blockGrid)
+        let bornCells = becomeAlive(deadCells(treeFromArray(blockGrid)), treeFromArray(blockGrid))
         
         XCTAssert(bornCells.count == 0, "no cells should have been born. born: \(bornCells.count)")
     }
     
     func testStayLivingWithStick() {
-        let survivors = gridInstance.stayLiving(stickGrid)
+        let survivors = stayLiving(treeFromArray(stickGrid))
         
         XCTAssertEqual(1, survivors.count, "Fail")
     }
     
     func testGetLivingNeighboursWithStick() {
-        let deadCell = gridInstance.getLivingNeighbours(stickGrid, cell: GridPoint(x: 4, y: 6))
-        let liveCell = gridInstance.getLivingNeighbours(stickGrid, cell: GridPoint(x: 5, y: 5))
+        let neighbourTree = treeFromArray(getNeighbours(GridPoint(x: 4, y: 6)))
+        let deadCell = treeIntersect(treeFromArray(stickGrid), neighbourTree).count
+        
+        let otherNeighbourTree = treeFromArray(getNeighbours(GridPoint(x: 5, y: 5)))
+        let liveCell = treeIntersect(treeFromArray(stickGrid), otherNeighbourTree).count
+
         
         XCTAssert(deadCell == 3, "Fail")
         XCTAssert(liveCell == 1, "Fail")
     }
     
     func testBecomeAliveWithStick() {
-        let bornCells = gridInstance.becomeAlive(gridInstance.deadCells(stickGrid), livingCells: stickGrid)
+        let bornCells = becomeAlive(deadCells(treeFromArray(stickGrid)), treeFromArray(stickGrid))
         
         XCTAssert(bornCells.count == 2, "two cells should have been born. born: \(bornCells.count)")
     }
     
     func testDeadCellsWithStick() {
-        let deadCells = gridInstance.deadCells(stickGrid)
+        let diedCells = treeElements(deadCells(treeFromArray(stickGrid)))
         
-        XCTAssert(deadCells.count == 12, "should be 12, was: \(deadCells.count)")
+        XCTAssert(diedCells.count == 12, "should be 12, was: \(diedCells.count)")
     }
     
 }

@@ -16,22 +16,6 @@ struct GridSize {
     let height: Int
 }
 
-//implement equatable for GridPoint
-func ==(lhs: GridPoint, rhs: GridPoint) -> Bool {
-    return lhs.hashValue == rhs.hashValue
-}
-
-struct GridPoint: Hashable {
-    let x: Int
-    let y: Int
-    
-    var hashValue: Int {
-        get {
-            return "\(self.x),\(self.y)".hashValue
-        }
-    }
-}
-
 class GridViewController: UICollectionViewController {
     let gridSize = GridSize(width: 30, height: 30)
 
@@ -83,13 +67,10 @@ class GridViewController: UICollectionViewController {
 
     func nextStep() {
         let selectedCells = self.collectionView?.indexPathsForSelectedItems() as! [NSIndexPath]
-        let oldGrid = selectedCells.map(indexPathToGridPoint)
+        let oldGrid = treeFromArray(selectedCells.map(indexPathToGridPoint))
         
-        let grid = Grid(gridSize: self.gridSize)
-        let newGrid = grid.nextGrid(oldGrid)
-        
-        let died = Array(Set(oldGrid).subtract(Set(newGrid))).map(gridPointToIndexPath)
-        let born = Array(Set(newGrid).subtract(Set(oldGrid))).map(gridPointToIndexPath)
+        let died = filterForBounds(treeElements(treeSubtractWithArray(stayLiving(oldGrid), from: oldGrid)), gridSize).map(gridPointToIndexPath)
+        let born = filterForBounds(becomeAlive(deadCells(oldGrid), oldGrid), gridSize).map(gridPointToIndexPath)
         
         for indexPath in born {
             self.collectionView?.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: nil)

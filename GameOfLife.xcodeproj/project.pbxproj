@@ -18,6 +18,11 @@
 		2E7462851B3494ED00B5B91F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E7462841B3494ED00B5B91F /* Images.xcassets */; };
 		2E7462881B3494ED00B5B91F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E7462861B3494ED00B5B91F /* LaunchScreen.xib */; };
 		2E7462941B3494ED00B5B91F /* GameOfLifeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7462931B3494ED00B5B91F /* GameOfLifeTests.swift */; };
+		2E7853DB1B75EB8D00AA586C /* BinarySearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7853DA1B75EB8D00AA586C /* BinarySearch.swift */; };
+		2E7853DD1B75F52C00AA586C /* GridPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7853DC1B75F52C00AA586C /* GridPoint.swift */; };
+		2E7853DE1B75FE2600AA586C /* GridPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7853DC1B75F52C00AA586C /* GridPoint.swift */; };
+		2E7853E01B75FE5C00AA586C /* GridPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7853DF1B75FE5C00AA586C /* GridPointTests.swift */; };
+		2E7853E11B7638F100AA586C /* BinarySearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7853DA1B75EB8D00AA586C /* BinarySearch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +49,9 @@
 		2E74628D1B3494ED00B5B91F /* GameOfLifeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameOfLifeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E7462921B3494ED00B5B91F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E7462931B3494ED00B5B91F /* GameOfLifeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOfLifeTests.swift; sourceTree = "<group>"; };
+		2E7853DA1B75EB8D00AA586C /* BinarySearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinarySearch.swift; sourceTree = "<group>"; };
+		2E7853DC1B75F52C00AA586C /* GridPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridPoint.swift; sourceTree = "<group>"; };
+		2E7853DF1B75FE5C00AA586C /* GridPointTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridPointTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +98,8 @@
 				2E58FE341B36AD75000F0D84 /* PlayButton.swift */,
 				2E58FE2C1B349851000F0D84 /* GridViewController.swift */,
 				2E58FE2E1B35A560000F0D84 /* Grid.swift */,
+				2E7853DA1B75EB8D00AA586C /* BinarySearch.swift */,
+				2E7853DC1B75F52C00AA586C /* GridPoint.swift */,
 				2E7462811B3494ED00B5B91F /* Main.storyboard */,
 				2E7462841B3494ED00B5B91F /* Images.xcassets */,
 				2E7462861B3494ED00B5B91F /* LaunchScreen.xib */,
@@ -110,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				2E7462931B3494ED00B5B91F /* GameOfLifeTests.swift */,
+				2E7853DF1B75FE5C00AA586C /* GridPointTests.swift */,
 				2E7462911B3494ED00B5B91F /* Supporting Files */,
 			);
 			path = GameOfLifeTests;
@@ -225,9 +236,11 @@
 			files = (
 				2E58FE2D1B349851000F0D84 /* GridViewController.swift in Sources */,
 				2E58FE351B36AD75000F0D84 /* PlayButton.swift in Sources */,
+				2E7853DB1B75EB8D00AA586C /* BinarySearch.swift in Sources */,
 				2E74627E1B3494ED00B5B91F /* AppDelegate.swift in Sources */,
 				2E58FE2F1B35A560000F0D84 /* Grid.swift in Sources */,
 				2E58FE311B35BB92000F0D84 /* MainViewController.swift in Sources */,
+				2E7853DD1B75F52C00AA586C /* GridPoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,7 +250,10 @@
 			files = (
 				2E7462941B3494ED00B5B91F /* GameOfLifeTests.swift in Sources */,
 				2E58FE361B36DA3E000F0D84 /* Grid.swift in Sources */,
+				2E7853E11B7638F100AA586C /* BinarySearch.swift in Sources */,
+				2E7853DE1B75FE2600AA586C /* GridPoint.swift in Sources */,
 				2E58FE371B36DAB8000F0D84 /* GridViewController.swift in Sources */,
+				2E7853E01B75FE5C00AA586C /* GridPointTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
