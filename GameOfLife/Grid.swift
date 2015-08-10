@@ -41,6 +41,12 @@ class Grid: NSObject {
     }
 }
 
+func filterForBounds(cells: [GridPoint], bounds: GridSize) -> [GridPoint] {
+    return cells.filter { gridPoint in
+        return gridPoint.x <= bounds.width && gridPoint.y <= bounds.height
+    }
+}
+
 func deadCells(livingCells: Tree<GridPoint>) -> Tree<GridPoint> {
     let cellsArray: [[GridPoint]] = treeMap(livingCells)(getNeighbours)
     let neighboursTree = reduce(cellsArray, emptyTree()) { tree, cells in
