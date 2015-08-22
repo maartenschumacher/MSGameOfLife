@@ -8,22 +8,18 @@
 
 import UIKit
 
-struct ButtonState {
+struct PlayButtonState {
+    let action: () -> ()
     let title: String
-    let action: Selector
 }
 
 class PlayButton: UIButton {
     
-    let playState = ButtonState(title: "play", action: Selector("play"))
-    let pauseState = ButtonState(title: "pause", action: Selector("pause"))
-    
-    var currentPlayState: ButtonState?
-    
-    func setButtonState(state: ButtonState) {
-        self.setTitle(state.title, forState: UIControlState.Normal)
-        self.currentPlayState = state
-    }
-    
-}
+    var currentPlayState: PlayButtonState!
+    {
+        didSet {
+            self.setTitle(currentPlayState.title, forState: .Normal)
+        }
 
+    }
+}
