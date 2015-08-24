@@ -16,27 +16,35 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.playButtonInstance.currentPlayState = self.playButtonInstance.playState
+        self.playButtonInstance.currentPlayState = playState()
     }
 
     @IBAction func playButtonTapped(sender: PlayButton) {
-        sender.sendAction(sender.currentPlayState!.action, to: self, forEvent: nil)
+        sender.currentPlayState.action()
     }
     
     @IBAction func clear(sender: AnyObject) {
         self.timer?.invalidate()
         self.gridController?.clear()
-        self.playButtonInstance.setButtonState(self.playButtonInstance.playState)
+        self.playButtonInstance.currentPlayState = playState()
     }
     
     func play() {
         self.timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self.gridController!, selector: Selector("nextStep"), userInfo: nil, repeats: true)
-        self.playButtonInstance.setButtonState(self.playButtonInstance.pauseState)
+        self.playButtonInstance.currentPlayState = pauseState()
     }
     
     func pause() {
         self.timer?.invalidate()
-        self.playButtonInstance.setButtonState(self.playButtonInstance.playState)
+        self.playButtonInstance.currentPlayState = playState()
+    }
+    
+    func playState() -> PlayButtonState {
+        return PlayButtonState(action: self.play, title: "Play")
+    }
+    
+    func pauseState() -> PlayButtonState {
+        return PlayButtonState(action: self.pause, title: "Pause")
     }
     
     // MARK: - Navigation
