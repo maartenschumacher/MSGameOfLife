@@ -66,25 +66,20 @@ class GridViewController: UICollectionViewController {
     // MARK: Logic
 
     func nextStep() {
-        let selectedCells = self.collectionView?.indexPathsForSelectedItems() as! [NSIndexPath]
-        let oldGrid = treeFromArray(selectedCells.map(indexPathToGridPoint))
+        let selectedCells = self.collectionView?.indexPathsForSelectedItems() as! [NSIndexPath] // get selected cells
         
-        let died = filterForBounds(treeElements(treeSubtractWithArray(stayLiving(oldGrid), from: oldGrid)), gridSize).map(gridPointToIndexPath)
-        let born = filterForBounds(becomeAlive(deadCells(oldGrid), oldGrid), gridSize).map(gridPointToIndexPath)
+        let grid = filterForBounds(bornCells(selectedCells.map(indexPathToGridPoint)), gridSize).map(gridPointToIndexPath)
         
-        for indexPath in born {
-            self.collectionView?.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: nil)
+        clear()
+        
+        for indexPath in grid {
+            self.collectionView?.selectItemAtIndexPath(indexPath, animated: false, scrollPosition: .None)
         }
         
-        for indexPath in died {
-            self.collectionView?.deselectItemAtIndexPath(indexPath, animated: false)
-        }
     }
     
     func clear() {
-        for indexPath in self.collectionView?.indexPathsForSelectedItems() as! [NSIndexPath] {
-            self.collectionView?.deselectItemAtIndexPath(indexPath, animated: true)
-        }
+        self.collectionView?.selectItemAtIndexPath(nil, animated: false, scrollPosition: .None)
     }
     
     internal func indexPathToGridPoint(indexPath: NSIndexPath) -> GridPoint {
