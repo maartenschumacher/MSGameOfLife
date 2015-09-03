@@ -14,61 +14,21 @@ class Grid: NSObject {
     init(gridSize: GridSize) {
         self.gridSize = gridSize
     }
-    
-    func nextGrid(livingCells: Tree<GridPoint>) -> [GridPoint] {
-        return filterForSize(makeNextGrid(livingCells))
-    }
-    
-    // MARK: - Private
-    
-    internal func makeNextGrid(livingCells: Tree<GridPoint>) -> [GridPoint] {
-        let survivingCells = stayLiving(livingCells)
-        let bornCells = becomeAlive(deadCells(livingCells), livingCells)
-        
-        let survivorSet = Set(survivingCells)
-        let bornSet = Set(bornCells)
-        
-        return Array(survivorSet.union(bornSet))
-    }
-    
-    internal func filterForSize(cells: [GridPoint]) -> [GridPoint] {
-        let outOfBounds = cells.filter({
-            (cell: GridPoint) -> Bool in
-            cell.x > self.gridSize.width || cell.y > self.gridSize.height
-        })
-        
-        return Array(Set(cells).subtract(Set(outOfBounds)))
-    }
 }
 
 func filterForBounds(cells: [GridPoint], bounds: GridSize) -> [GridPoint] {
     return cells.filter { gridPoint in
-        return gridPoint.x <= bounds.width && gridPoint.y <= bounds.height
+        let x = gridPoint.x
+        let y = gridPoint.y
+        
+        return x <= bounds.width && x >= 0 && y >= 0 && gridPoint.y <= bounds.height
     }
 }
 
-func deadCells(livingCells: Tree<GridPoint>) -> Tree<GridPoint> {
-    let cellsArray: [[GridPoint]] = treeMap(livingCells)(getNeighbours)
-    let neighboursTree = reduce(cellsArray, emptyTree()) { tree, cells in
-        return reduce(cells, tree) { tree, cell in
-            return treeInsert(tree)(cell)
-        }
-    }
-    
-    return treeSubtract(livingCells, from: neighboursTree)
-}
-
-func becomeAlive(deadCells: Tree<GridPoint>, livingCells: Tree<GridPoint>) -> [GridPoint] {
-    return treeFilter(judgeNeighbours(livingCells, rule: becomeAliveRule), deadCells)
-}
-
-func stayLiving(livingCells: Tree<GridPoint>) -> [GridPoint] {
-    return treeFilter(judgeNeighbours(livingCells, rule: stayLivingRule), livingCells)
-}
-
-func judgeNeighbours(livingCells: Tree<GridPoint>, rule f: (Int -> Bool))(cell: GridPoint) -> Bool {
-    let neighbourTree = treeFromArray(getNeighbours(cell))
-    return f(treeIntersect(livingCells, neighbourTree).count)
+func judgeNeighbours(livingCells: Set<GridPoint>)(cell: GridPoint) -> Bool {
+    let neighbours = getNeighbours(cell)
+    let aliveNeighbours = neighbours.filter { livingCells.contains($0) }.count
+    return aliveNeighbours == 3 || aliveNeighbours == 2 && livingCells.contains(cell)
 }
 
 func getNeighbours(cell: GridPoint) -> [GridPoint] {
@@ -84,19 +44,12 @@ func getNeighbours(cell: GridPoint) -> [GridPoint] {
     ]
 }
 
-func stayLivingRule(x: Int) -> Bool {
-    return x == 2 || x == 3
+func bornCells(livingCells: [GridPoint]) -> [GridPoint] {
+    
+    let livingCellsSet = Set(livingCells) // lookups are faster in Sets than in arrays
+    
+    return Array(livingCellsSet.union(Set(livingCells.flatMap(getNeighbours)))).filter({judgeNeighbours(livingCellsSet)(cell: $0)})
 }
-
-func becomeAliveRule(x: Int) -> Bool {
-    return x == 3
-}
-
-
-
-
-
-
 
 
 
